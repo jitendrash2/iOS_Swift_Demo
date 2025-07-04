@@ -1,0 +1,26 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build the iOS app with automatic code signing"
+  lane :build do
+    build_app(
+      scheme: "Swift iOS Demo",
+      export_method: "app-store",
+      export_options: {
+        signingStyle: "automatic",
+        compileBitcode: false
+      }
+    )
+  end
+
+  desc "Commit and push code to GitHub"
+  lane :commit_and_push do
+    sh "git add ."
+    sh "git commit -m 'Automated commit via Fastlane' || echo 'Nothing to commit'"
+    push_to_git_remote(
+      remote: 'origin',
+      branch: 'main',
+      force: false
+    )
+  end
+end
