@@ -14,13 +14,16 @@ platform :ios do
   end
 
   desc "Commit and push code to GitHub"
-  lane :commit_and_push do
-    sh "git add ."
-    sh "git commit -m 'Automated commit via Fastlane' || echo 'Nothing to commit'"
-    push_to_git_remote(
-      remote: 'origin',
-      branch: 'main',
-      force: false
-    )
-  end
+lane :commit_and_push do
+  sh "git add ."
+  sh "git commit -m 'Automated commit via Fastlane' || echo 'Nothing to commit'"
+
+  push_to_git_remote(
+    remote: 'origin',
+    local_branch: 'main',
+    remote_branch: 'main',
+    force: false
+  )
+end
+
 end
